@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
+@layer components {
+   /* form */
+   .input-text-label {
+      @apply block mb-2 text-sm font-medium text-theme-level-5;
+   }
+   .input-text {
+      @apply bg-theme-level-3 text-theme-level-5 text-sm block w-full p-2.5;
+   }
+   .input-text-label-lg {
+      @apply block text-lg font-medium text-theme-level-5;
+   }
+   .input-text-lg {
+      @apply bg-theme-level-3 text-theme-level-5 text-lg block w-full p-3 focus:outline-none placeholder:text-lg;
+   }
+   /* grid-system */
+   .row {
+      @apply sm:block md:flex;
+      flex-wrap: wrap;
+   }
+   .col-12 {
+      @apply w-full;
+   }
+   .g-1 {
+      @apply p-[0.25rem];
+   }
+   .g-2 {
+      @apply p-[0.5rem];
+   }
+   .g-3 {
+      @apply p-[1rem];
+   }
+   .g-4 {
+      @apply p-[1.5rem];
+   }
+   .g-5 {
+      @apply p-[3rem];
+   }
+   .col-1 {
+      flex: 0 0 auto;
+      @apply w-[8.33333333%];
+   }
+   .col-2 {
+      flex: 0 0 auto;
+      @apply w-[16.66666667%];
+   }
+   .col-3 {
+      flex: 0 0 auto;
+      @apply w-[25%];
+   }
+   .col-4 {
+      flex: 0 0 auto;
+      @apply w-[33.33333333%];
+   }
+   .col-5 {
+      flex: 0 0 auto;
+      @apply w-[41.66666667%];
+   }
+   .col-6 {
+      flex: 0 0 auto;
+      @apply w-[50%];
+   }
+   .col-7 {
+      flex: 0 0 auto;
+      @apply w-[58.33333333%];
+   }
+   .col-8 {
+      flex: 0 0 auto;
+      @apply w-[66.66666667%];
+   }
+   .col-9 {
+      flex: 0 0 auto;
+      @apply w-[75%];
+   }
+   .col-10 {
+      flex: 0 0 auto;
+      @apply w-[83.33333333%];
+   }
+   .col-11 {
+      flex: 0 0 auto;
+      @apply w-[91.66666667%];
+   }
+   .col-12 {
+      flex: 0 0 auto;
+      @apply w-full;
+   }
+}
+* {
+   margin: 0;
+   padding: 0;
+}
+body {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+.image-gallery-content .image-gallery-slide .image-gallery-image {
+   width: 100%;
+   object-fit: cover !important;
+   height: 60vh !important;
+}
+.image-gallery-slide .image-gallery-description {
+   bottom: 0px !important;
+   font-size: 50px;
+   width: 100% !important;
+}
+.iframe {
+   height: 60vh !important;
+}
+/* width */
+.app-slider::-webkit-scrollbar {
+   display: none;
+   -ms-overflow-style: none;
+   scrollbar-width: none;
+}
+.ql-toolbar.ql-snow {
+   border: none !important;
+}
+.ql-container.ql-snow {
+   border: none !important;
+}
