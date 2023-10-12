@@ -1,19 +1,18 @@
 "use client";
-import { useCustomization } from "@/shared/hooks/useCustomization";
+import { Theme, setFont, setTheme } from "@/redux/slices/customization.slice";
+import { useAppDispatch } from "@/redux/store";
 import { fontsObj } from "@/shared/utils/fonts";
 import { color_palettes } from "@/shared/utils/theme";
 import React from "react";
 
 export default function ThemesPage() {
-   const ctx = useCustomization();
-   const setAppTheme = (varObj: object) => {
-      ctx?.theme?.setTheme(varObj);
-      localStorage.setItem("theme", JSON.stringify(varObj));
+   const dispatch = useAppDispatch();
+   const setAppTheme = (varObj: Theme) => {
+      dispatch(setTheme(varObj));
    };
 
    const setAppFont = (font: string) => {
-      ctx?.font.setFont(font);
-      localStorage.setItem("font", font);
+      dispatch(setFont(font));
    };
    return (
       <>

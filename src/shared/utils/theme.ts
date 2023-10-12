@@ -113,13 +113,4 @@ const color_palettes = [
    },
 ];
 
-function applyTheme(theme: any) {
-   console.log(theme);
-
-   const root = document.documentElement;
-   Object.keys(theme).forEach((cssVar) => {
-      root.style.setProperty(cssVar, theme[cssVar]);
-   });
-}
-
-export { color_palettes, applyTheme };
+export { color_palettes };

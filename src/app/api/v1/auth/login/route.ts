@@ -3,7 +3,7 @@ import bcryptjs from "bcryptjs";
 import User from "@/models/user.model";
 import { NextResponse } from "next/server";
 import connect2DB from "@/database/database.config";
-import { createAccessToken } from "@/helpers/token";
+import { signJWT } from "@/helpers/token";
 
 type Body = {
    email: string;
@@ -25,7 +25,8 @@ export async function POST(request: Request) {
       if (!match) {
          return NextResponse.json({ message: "you are unauthorized!" }, { status: 401 });
       }
-      const accessToken = await createAccessToken(dbUser._id);
+      const accessToken = await signJWT({ sub: dbUser._id }, { exp: process.env.TOKEN_EXPIRES_IN?.replace("-", "") as string });
+
       const response: any = NextResponse.json(
          {
             accessToken: accessToken,
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
       );
       response.cookies.set("accessToken", accessToken, {
          httpOnly: true,
-         maxAge: new Date(Date.now() + 60 * parseInt(process.env.TOKEN_EXPIRES_IN as string)),
+         maxAge: new Date(Date.now() + 60 * parseInt(process.env.TOKEN_EXPIRES_IN?.split("-")[0] as string)),
       });
       return response;
    } catch (error) {

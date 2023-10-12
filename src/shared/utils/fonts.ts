@@ -37,7 +37,4 @@ const fontsObj: any = {
    playfair_Display: playfair_Display,
 };
 
-function applyFont(param: string) {
-   document.getElementsByTagName("body")[0].className = `bg-theme-level-1 ${fontsObj[param]?.className}`;
-}
-export { fonts, fontsObj, applyFont };
+export { fonts, fontsObj };
