@@ -1,6 +1,5 @@
 "use client";
-import SelectInput from "@/shared/components/select-input";
-import TextField from "@/shared/components/text-field";
+import Input from "@/app/components/form/Input";
 import { ErrorMessage, Field, FieldArray, Form, Formik, FormikProps } from "formik";
 import React from "react";
 import useAdminSingleBlogController from "./useAdminSingleBlog.controller";
@@ -8,9 +7,10 @@ import blogSchema from "./blog.schema";
 import { MdDelete } from "react-icons/md";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import NextButton from "@/shared/components/NextButton";
 import { useSearchParams } from "next/navigation";
-import { RadioBoxGroup, RadioBox } from "@/shared/components/RadioBox";
+import Button from "@/app/components/form/Button";
+import Select from "@/app/components/form/Select";
+import Textarea from "@/app/components/form/Textarea";
 
 const categories = [
    {
@@ -53,9 +53,9 @@ export default function AdminSingleBlogPage({ params }: { params: { blogID: stri
                      </div>
                      <div className="col-4 text-end">
                         {!isReadMode && (
-                           <NextButton role="button" type="submit" color="primary" size="large" disabled={!formik.isValid}>
+                           <Button role="button" type="submit" color="primary" size="large" disabled={!formik.isValid}>
                               {isCreateMode ? "+ create" : "Update"} blog
-                           </NextButton>
+                           </Button>
                         )}
                      </div>
                   </div>
@@ -65,39 +65,29 @@ export default function AdminSingleBlogPage({ params }: { params: { blogID: stri
                      <div className="text-lg text-theme-level-5 font-semibold capitalize border-b pb-3 mb-3 border-theme-level-3">basic details</div>
                      <div className="row">
                         <div className="col-12 p-1">
-                           <TextField type="text" name="title" id="title" label="title" placeholder="Enter blog title" large formik disabled={isReadMode} />
+                           <Input type="text" name="title" id="title" label="title" placeholder="Enter blog title" disabled={isReadMode} theme required />
                         </div>
                         <div className="sm:col-12 md:col-4 p-1">
-                           <SelectInput label="category" name="category" id="category" placeholder="Select category" options={categories} large formik disabled={isReadMode} />
+                           <Select label="category" name="category" id="category" placeholder="Select category" options={categories} formik disabled={isReadMode} theme required />
                         </div>
                         <div className="sm:col-12 md:col-4 p-1">
-                           <SelectInput
+                           <Select
                               label="subcategory"
                               name="subcategory"
                               id="subcategory"
                               placeholder="Select subcategory"
                               options={category?.subcategories || []}
-                              large
                               formik
+                              theme
+                              required
                               disabled={isReadMode}
                            />
                         </div>
                         <div className="sm:col-12 md:col-4 p-1">
-                           <TextField type="text" name="author" id="author" label="author" placeholder="author" large formik disabled={isReadMode} />
+                           <Input type="text" name="author" id="author" label="author" placeholder="author" disabled={isReadMode} theme required />
                         </div>
                         <div className="col-12 p-1">
-                           <label htmlFor="summary" className="block text-lg font-medium text-theme-level-5 capitalize mb-2">
-                              summary
-                           </label>
-                           <Field
-                              as="textarea"
-                              name="summary"
-                              id="summary"
-                              placeholder="Enter blog summary"
-                              className="bg-theme-level-3 text-theme-level-5 w-full h-40 block focus:outline-none placeholder:text-theme-level-4 disabled:bg-theme-level-3 disabled:cursor-not-allowed text-lg  p-3 placeholder:text-lg"
-                              disabled={isReadMode}
-                           />
-                           <ErrorMessage name="summary" component="small" className="text-error" />
+                           <Textarea name="summary" id="summary" placeholder="Enter blog summary" label="blog summary" rows={5} theme required />
                         </div>
                      </div>
                   </div>
@@ -113,9 +103,9 @@ export default function AdminSingleBlogPage({ params }: { params: { blogID: stri
                                  </div>
                                  <div className="col-6 text-end">
                                     {!isReadMode && (
-                                       <NextButton role="button" type="button" color="primary" size="small" onClick={() => push("#test")}>
+                                       <Button role="button" type="button" color="primary" size="small" onClick={() => push("#test")}>
                                           + add hashtag
-                                       </NextButton>
+                                       </Button>
                                     )}
                                  </div>
                               </div>
@@ -123,14 +113,12 @@ export default function AdminSingleBlogPage({ params }: { params: { blogID: stri
                                  {formik.values?.meta?.hashtags?.length ? (
                                     formik.values?.meta?.hashtags?.map((hashtag: any, idx: number) => (
                                        <div key={`hashtag-${hashtag}-${idx}`} className="sm:col-12 md:col-3 p-1">
-                                          <TextField
+                                          <Input
                                              type="text"
                                              name={`meta.hashtags[${idx}]`}
                                              id={`hashtag-${idx}`}
-                                             label={`hashtag ${idx + 1}`}
                                              placeholder="hashtag"
-                                             large
-                                             formik
+                                             theme
                                              extra={
                                                 !isReadMode ? (
                                                    <button type="button" className="px-3 text-error" onClick={() => remove(idx)}>
@@ -159,18 +147,7 @@ export default function AdminSingleBlogPage({ params }: { params: { blogID: stri
                         )}
                      </FieldArray>
                      <div>
-                        <label htmlFor="meta_description" className="block text-lg font-medium text-theme-level-5 capitalize mb-2">
-                           meta description
-                        </label>
-                        <Field
-                           as="textarea"
-                           name="meta.description"
-                           id="meta_description"
-                           placeholder="Enter meta description"
-                           className="bg-theme-level-3 text-theme-level-5 w-full h-40 block focus:outline-none placeholder:text-theme-level-4 disabled:bg-theme-level-3 disabled:cursor-not-allowed text-lg  p-3 placeholder:text-lg"
-                           disabled={isReadMode}
-                        />
-                        <ErrorMessage name="meta.description" component="small" className="text-error" />
+                        <Textarea name="meta.description" id="meta_description" placeholder="Enter blog summary" label="meta description" rows={5} theme required />
                      </div>
                   </div>
                   {/* meta section */}

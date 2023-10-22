@@ -1,9 +1,5 @@
+import ErrorResponse from "@/helpers/createHttpError";
 import { NextResponse } from "next/server";
-
-type Body = {
-   email: string;
-   password: string;
-};
 
 export async function GET(request: Request) {
    try {
@@ -14,6 +10,6 @@ export async function GET(request: Request) {
       });
       return response;
    } catch (error) {
-      return NextResponse.json({ message: "internal server error" }, { status: 500 });
+      return ErrorResponse.InternalServerError();
    }
 }

@@ -1,12 +1,15 @@
 "use client";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { getCustomization } from "./slices/customization.slice";
 import { useAppDispatch, useAppSelector } from "./store";
 import { fontsObj } from "@/shared/utils/fonts";
-
-export default function AppProvider({ children }: { children: ReactNode }) {
+import AuthService from "./services/auth.service";
+const UserContext = createContext({});
+function AppProvider({ children, user }: { children: ReactNode; user: any }) {
    const dispatch = useAppDispatch();
    const { loading, theme, font } = useAppSelector((state) => state.customizationReducer);
+   const { isRefresh } = useAppSelector((state) => state.authReducer);
+   const { _useOnLoad } = new AuthService();
 
    const applyTheme = (theme: any) => {
       const root = document.documentElement;
@@ -34,17 +37,31 @@ export default function AppProvider({ children }: { children: ReactNode }) {
       return () => {};
    }, [theme, font]);
 
+   useEffect(() => {
+      dispatch(_useOnLoad());
+      return () => {};
+   }, [isRefresh]);
+
    return (
       <div>
-         <div className={loading ? "block" : "hidden"}>
-            <section className="h-[100%] w-[100%] flex justify-center items-center fixed" style={{ fontFamily: "Arial, Helvetica, sans-serif", background: "white" }}>
-               <div role="status">
-                  <img src="/logo.png" alt="logo" width={100} className="block mx-auto" />
-                  <div className="text-2xl font-semibold text-gray-800 text-center">Clever Skull</div>
-               </div>
-            </section>
-         </div>
-         <div className={!loading ? "block" : "hidden"}>{children}</div>
+         {loading ? (
+            <div>
+               <section className="h-[100%] w-[100%] flex justify-center items-center fixed" style={{ fontFamily: "Arial, Helvetica, sans-serif", background: "white" }}>
+                  <div role="status">
+                     <img src="/logo.png" alt="logo" width={100} className="block mx-auto" />
+                     <div className="text-2xl font-semibold text-gray-800 text-center">Clever Skull</div>
+                  </div>
+               </section>
+            </div>
+         ) : (
+            <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+         )}
       </div>
    );
 }
+
+function useAuth() {
+   return useContext(UserContext);
+}
+
+export { AppProvider, useAuth };

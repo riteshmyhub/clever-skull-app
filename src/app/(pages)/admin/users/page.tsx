@@ -1,4 +1,4 @@
-import NextButton from "@/shared/components/NextButton";
+import Button from "@/app/components/form/Button";
 import React from "react";
 
 export default function AdminUsersPage() {
@@ -24,9 +24,9 @@ export default function AdminUsersPage() {
                      </div>
                      <div className="sm:col-12 md:col-2 text-center">
                         <div className="text-theme-level-5 font-bold py-1 text-md underline">
-                           <NextButton role="href" navigate={{ path: "users/123" }}>
+                           <Button role="href" navigate={{ path: "users/123" }}>
                               view
-                           </NextButton>
+                           </Button>
                         </div>
                      </div>
                   </div>

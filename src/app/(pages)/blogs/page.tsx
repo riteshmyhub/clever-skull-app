@@ -1,5 +1,5 @@
-import BlogCard from "@/shared/components/BlogCard";
-import Slider from "@/shared/components/Slider/Slider";
+import BlogCard from "@/app/components/BlogCard";
+import Slider from "@/app/components/Slider";
 import { Anton } from "next/font/google";
 import Link from "next/link";
 import React from "react";

@@ -1,14 +1,29 @@
 import AuthService from "@/redux/services/auth.service";
-import axios from "axios";
-import { signIn } from "next-auth/react";
+import { appRefresh } from "@/redux/slices/auth.slice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 
 export default function useLoginController() {
    const router = useRouter();
+   const { _login } = new AuthService();
+   const dispatch = useAppDispatch();
+   const { loading } = useAppSelector((state) => state.authReducer);
+   const callback = ({ data, error }: any) => {
+      if (data) {
+         router.replace("/dashboard/profile");
+         toast.success(data?.message);
+         router.refresh();
+         dispatch(appRefresh());
+      }
+      if (error) {
+         toast.error(error.response?.data?.error?.message);
+      }
+   };
 
    const submitHandler = async (values: any, actions: any) => {
-      _login(values);
+      dispatch(_login({ userObj: values, callback: callback }));
       actions?.resetForm();
    };
 
@@ -23,17 +38,10 @@ export default function useLoginController() {
       return errors;
    };
 
-   const _login = async (userObj: { email: string; password: string }) => {
-      try {
-         const { data } = await axios.post("/api/v1/auth/login", userObj);
-         console.log(data);
-         router.replace("/");
-         toast.success(data?.message);
-         router.refresh();
-      } catch (error: any) {
-         toast.error(error.response?.data?.message);
-      }
-   };
+   useEffect(() => {
+     
+      return () => {};
+   }, []);
 
-   return { submitHandler, validatorHandler };
+   return { submitHandler, validatorHandler, loading };
 }

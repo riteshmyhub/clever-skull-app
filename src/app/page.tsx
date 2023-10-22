@@ -1,5 +1,6 @@
-import DoteParticle from "@/shared/components/DoteParticle";
 import { Metadata } from "next/types";
+import DoteParticle from "./components/effects/DoteParticle";
+import ShapeParticle from "./components/effects/ShapeParticle";
 
 export const metadata: Metadata = {
    title: "Clever Skull | Ritesh",
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
 export default function Home() {
    return (
       <>
-         <DoteParticle />
          {/* <ShapeParticle /> */}
+         <DoteParticle />
          <section className="md:container md:mx-auto row items-center justify-center h-[100%] px-3">
             <div className="sm:col-12 md:col-6">
                <span className="block text-9xl mb-2 text-theme-level-5 font-extrabold">

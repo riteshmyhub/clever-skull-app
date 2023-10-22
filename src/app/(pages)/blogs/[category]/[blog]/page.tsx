@@ -1,6 +1,6 @@
 "use client";
 
-import Carousel from "@/shared/components/Carousel";
+import Carousel from "@/app/components/Carousel";
 import { ReactImageGalleryItem } from "react-image-gallery";
 
 const images: ReactImageGalleryItem[] = [

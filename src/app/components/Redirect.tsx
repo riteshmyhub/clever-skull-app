@@ -5,17 +5,19 @@ import { usePathname, useRouter } from "next/navigation";
 type Props = {
    matchPath: string;
    to: string;
+   callback?: Function;
 };
 
-export default function Redirect({ matchPath, to }: Props) {
+export default function Redirect({ matchPath, to, callback }: Props) {
    const router = useRouter();
    const pathname = usePathname();
 
    useEffect(() => {
-      if (pathname === matchPath) {
+      if (pathname.includes(matchPath)) {
+         callback && callback();
          router.replace(to);
       }
       return () => {};
    }, [pathname]);
-   return <div className="text-xl text-theme-level-5">redirecting...</div>;
+   return <p>auth guard is redirecting...</p>;
 }

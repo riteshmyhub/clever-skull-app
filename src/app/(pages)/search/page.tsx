@@ -1,3 +1,7 @@
+"use client";
+import { useAuth } from "@/redux/AppProvider";
+
 export default function SearchPage() {
-   return <div>SearchPage</div>;
+   const user = useAuth();
+   return <>{JSON.stringify(user)}</>;
 }

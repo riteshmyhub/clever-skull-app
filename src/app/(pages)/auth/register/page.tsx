@@ -1,8 +1,8 @@
 "use client";
-import { Field, ErrorMessage, Formik, FormikProps, Form } from "formik";
+import { Formik, FormikProps, Form } from "formik";
 import useRegisterController from "./useRegister.controller";
-import TextField from "@/shared/components/text-field";
-import NextButton from "@/shared/components/NextButton";
+import Input from "@/app/components/form/Input";
+import Button from "@/app/components/form/Button";
 
 export default function RegisterPage() {
    const { submitHandler, validatorHandler } = useRegisterController();
@@ -20,20 +20,20 @@ export default function RegisterPage() {
                            <span className="text-4xl block mb-3 text-theme-level-5 font-bold">Create your Account</span>
                         </div>
                         <div>
-                           <TextField type="text" name="email" id="email" label="email" placeholder="Email" large formik />
+                           <Input type="text" name="email" id="email" label="Email" placeholder="Email" theme required shape="large" />
                         </div>
                         <div className="grid sm:md:grid-cols-1 md:grid-cols-2 gap-2">
                            <div>
-                              <TextField type="password" name="password" id="password" label="password" placeholder="Password" large formik />
+                              <Input type="password" name="password" id="password" label="Password" placeholder="Password" theme required shape="large" />
                            </div>
                            <div className="mb-2">
-                              <TextField type="password" name="confirm_password" id="confirm_password" label="confirm password" placeholder="Confirm password" large formik />
+                              <Input type="password" name="confirm_password" id="confirm_password" label="Confirm password" placeholder="Confirm password" theme required shape="large" />
                            </div>
                         </div>
                         <div className="my-1">
-                           <NextButton role="button" type="submit" color="primary" size="large" disabled={!(formik.dirty && formik.isValid)}>
+                           <Button role="button" type="submit" color="primary" size="large" disabled={!(formik.dirty && formik.isValid)}>
                               Create Account
-                           </NextButton>
+                           </Button>
                         </div>
                      </div>
                   </div>

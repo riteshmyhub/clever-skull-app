@@ -2,9 +2,9 @@
 import React from "react";
 import useForgotPasswordController from "./useForgotPassword.controller";
 import { Form, Formik, FormikProps } from "formik";
-import TextField from "@/shared/components/text-field";
-import NextButton from "@/shared/components/NextButton";
-import DigitalTimer from "@/shared/components/DigitalTimer";
+import DigitalTimer from "@/app/components/DigitalTimer";
+import Button from "@/app/components/form/Button";
+import Input from "@/app/components/form/Input";
 
 export default function ForgotPasswordPage() {
    const { otpRequestForm, resetPasswordFormSubmit, resetPasswordFormValidator, isOtpSend, resendOtp } = useForgotPasswordController();
@@ -42,9 +42,9 @@ export default function ForgotPasswordPage() {
                            />
                         </div>
                         <div className="my-1">
-                           <NextButton role="button" type="submit" color="primary" size="large" disabled={Boolean(!otpRequestForm.form.email)}>
+                           <Button role="button" type="submit" color="primary" size="large" disabled={Boolean(!otpRequestForm.form.email)}>
                               send otp
-                           </NextButton>
+                           </Button>
                         </div>
                      </div>
                   </form>
@@ -65,23 +65,23 @@ export default function ForgotPasswordPage() {
                               <span className="text-4xl block mb-3 text-theme-level-5 font-bold">Reset password</span>
                            </div>
                            <div>
-                              <TextField type="text" name="otp" id="otp" label="otp" placeholder="otp" large formik />
+                              <Input type="text" name="otp" id="otp" label="otp" placeholder="otp" shape="large" theme required />
                            </div>
                            <div className="grid sm:md:grid-cols-1 md:grid-cols-2 gap-2">
                               <div>
-                                 <TextField type="password" name="password" id="password" label="password" placeholder="Password" large formik />
+                                 <Input type="password" name="password" id="password" label="password" placeholder="Password" shape="large" theme required />
                               </div>
                               <div className="mb-2">
-                                 <TextField type="password" name="confirm_password" id="confirm_password" label="confirm password" placeholder="Confirm password" large formik />
+                                 <Input type="password" name="confirm_password" id="confirm_password" label="confirm password" placeholder="Confirm password" shape="large" theme required />
                               </div>
                            </div>
                            <div className="link text-theme-level-5">
                               OTP will expire in <DigitalTimer sec={20} callback={resendOtp} />
                            </div>
                            <div>
-                              <NextButton role="button" type="submit" color="primary" size="large" disabled={!(formik.dirty && formik.isValid)}>
+                              <Button role="button" type="submit" color="primary" size="large" disabled={!(formik.dirty && formik.isValid)}>
                                  Reset password
-                              </NextButton>
+                              </Button>
                            </div>
                         </Form>
                      )}

@@ -21,10 +21,11 @@ type ExtraFeatures = {
    fullWidth?: boolean;
    role: "button" | "href";
    dialog?: Dialog;
+   loading?: boolean;
 };
 type ButtonProps = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & ExtraFeatures;
 
-export default function NextButton(props: ButtonProps) {
+export default function Button(props: ButtonProps) {
    const [isOpen, setDialog] = React.useState(false);
    const router = useRouter();
    const navigation = () => {
@@ -41,7 +42,7 @@ export default function NextButton(props: ButtonProps) {
       setDialog(false);
    };
    const className = () => {
-      let btnClass: string = "rounded-sm disabled:bg-gray-300 disabled:text-white disabled:cursor-not-allowed uppercase";
+      let btnClass: string = "rounded-sm disabled:bg-theme-level-3 disabled:text-theme-level-4 disabled:cursor-not-allowed uppercase";
       if (props.size === "small") {
          btnClass += " py-1 px-3 text-sm";
       }
@@ -91,7 +92,7 @@ export default function NextButton(props: ButtonProps) {
                className={className()}
                {...(props.navigate ? { onClick: () => navigation() } : {})}
                {...(props.dialog ? { onClick: () => setDialog(true) } : {})}>
-               {props.children}
+               {props?.loading ? "loading..." : props.children}
             </button>
             {/* modal portal */}
             {props.dialog &&
@@ -134,12 +135,12 @@ function DialogBox(props: Props) {
                      </svg>
                      <h3 className="mb-5 text-lg font-normal text-theme-level-5">{props.title}</h3>
                      <div className="grid grid-cols-2 gap-2">
-                        <NextButton role="button" type="button" color="danger" size="large" onClick={props.ok} fullWidth>
+                        <Button role="button" type="button" color="danger" size="large" onClick={props.ok} fullWidth>
                            Yes
-                        </NextButton>
-                        <NextButton role="button" type="button" color="primary" size="large" onClick={props.onClose} fullWidth>
+                        </Button>
+                        <Button role="button" type="button" color="primary" size="large" onClick={props.onClose} fullWidth>
                            Cancel
-                        </NextButton>
+                        </Button>
                      </div>
                   </div>
                </div>

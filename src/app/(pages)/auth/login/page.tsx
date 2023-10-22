@@ -2,11 +2,11 @@
 import Link from "next/link";
 import useLoginController from "./useLogin.controller";
 import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
-import TextField from "@/shared/components/text-field";
-import NextButton from "@/shared/components/NextButton";
+import Button from "@/app/components/form/Button";
+import Input from "@/app/components/form/Input";
 
 export default function LoginPage() {
-   const { submitHandler, validatorHandler } = useLoginController();
+   const { submitHandler, validatorHandler, loading } = useLoginController();
    return (
       <Formik initialValues={{ email: "", password: "", confirm_password: "" }} onSubmit={submitHandler} validate={validatorHandler}>
          {(formik: FormikProps<any>) => (
@@ -21,10 +21,10 @@ export default function LoginPage() {
                            <span className="text-4xl block mb-3 text-theme-level-5 font-bold">Login to your Account</span>
                         </div>
                         <div>
-                           <TextField type="text" name="email" id="email" label="email" placeholder="Email" large formik />
+                           <Input type="text" name="email" id="email" label="Email" placeholder="Email" shape="large" theme required />
                         </div>
                         <div>
-                           <TextField type="text" name="password" id="password" label="password" placeholder="Password" large formik />
+                           <Input type="text" name="password" id="password" label="Password" placeholder="password" shape="large" theme required />
                         </div>
                         <div className="grid grid-cols-2 text-theme-level-5 my-2">
                            <div>
@@ -39,16 +39,16 @@ export default function LoginPage() {
                            </div>
                         </div>
                         <div className="my-1">
-                           <NextButton role="button" type="submit" color="primary" size="large" disabled={!(formik.dirty && formik.isValid)}>
+                           <Button role="button" type="submit" color="primary" size="large" disabled={!(formik.dirty && formik.isValid) || loading} loading={loading}>
                               log in
-                           </NextButton>
+                           </Button>
                         </div>
                         <div className="link text-theme-level-5 mt-2">
                            Not registered yet?
                            <span className="underline">
-                              <NextButton role="href" navigate={{ path: "register" }}>
+                              <Button role="href" navigate={{ path: "register" }}>
                                  Create an Acconunt
-                              </NextButton>
+                              </Button>
                            </span>
                         </div>
                      </div>

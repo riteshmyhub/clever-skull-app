@@ -4,6 +4,10 @@ const endpoints = Object.freeze({
       logout: "/auth/logout",
       register: "/auth/register",
    },
+   user: {
+      getProfile: "/user/profile",
+      createProfile: "/user/create-profile",
+   },
 });
 
 export default endpoints;

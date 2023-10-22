@@ -1,9 +1,11 @@
+import { headers } from "next/headers";
 import bcryptjs from "bcryptjs";
 
 import User from "@/models/user.model";
 import { NextResponse } from "next/server";
 import connect2DB from "@/database/database.config";
 import { signJWT } from "@/helpers/token";
+import ErrorResponse from "@/helpers/createHttpError";
 
 type Body = {
    email: string;
@@ -15,21 +17,22 @@ export async function POST(request: Request) {
       const body: Body = await request.json();
       const { email, password } = body;
       if (!email || !password) {
-         return NextResponse.json({ message: "email password required!" }, { status: 400 });
+         return ErrorResponse.BadRequest("email password required!");
       }
       const dbUser = await User.findOne({ email }).select("+password");
       if (!dbUser) {
-         return NextResponse.json({ message: "user not found!" }, { status: 404 });
+         return ErrorResponse.NotFound("user not found!");
       }
       let match = await bcryptjs.compare(password, dbUser.password);
       if (!match) {
-         return NextResponse.json({ message: "you are unauthorized!" }, { status: 401 });
+         return ErrorResponse.Unauthorized();
       }
       const accessToken = await signJWT({ sub: dbUser._id }, { exp: process.env.TOKEN_EXPIRES_IN?.replace("-", "") as string });
 
       const response: any = NextResponse.json(
          {
             accessToken: accessToken,
+            exp: process.env.TOKEN_EXPIRES_IN,
             message: "login successfully",
          },
          { status: 200 }
@@ -40,6 +43,6 @@ export async function POST(request: Request) {
       });
       return response;
    } catch (error) {
-      return NextResponse.json({ message: "internal server error" }, { status: 500 });
+      return ErrorResponse.InternalServerError();
    }
 }

@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 export default class HttpClient {
-   protected baseurl: string = "localhost:3000/api/v1";
+   protected baseurl: string = "/api/v1";
    constructor() {}
    get = (url: string, config?: AxiosRequestConfig<any>) => {
       return axios.get(this.baseurl + url, config);

@@ -1,7 +1,19 @@
 "use client";
 
-import Redirect from "@/shared/components/Redirect";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function RedirectToProfilePage() {
-   return <Redirect matchPath="/dashboard" to="/dashboard/profile" />;
+   const router = useRouter();
+   const pathname = usePathname();
+
+   useEffect(() => {
+      if (pathname.includes("dashboard")) {
+         router.replace("/dashboard/profile");
+      }
+      return () => {};
+   }, [pathname]);
+
+   return <div>redirecting to profile page...</div>;
 }

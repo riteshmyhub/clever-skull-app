@@ -1,4 +1,4 @@
-import BlogCard from "@/shared/components/BlogCard";
+import BlogCard from "@/app/components/BlogCard";
 import Link from "next/link";
 import React, { useEffect } from "react";
 

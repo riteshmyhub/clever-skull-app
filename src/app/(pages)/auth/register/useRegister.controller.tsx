@@ -1,11 +1,27 @@
+import AuthService from "@/redux/services/auth.service";
+import { useAppDispatch } from "@/redux/store";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function useRegisterController() {
    const router = useRouter();
+   const { _register } = new AuthService();
+   const dispatch = useAppDispatch();
+
+   const callback = ({ data, error }: any) => {
+      if (data) {
+         router.replace("login");
+         toast.success(data?.message);
+         router.refresh();
+      }
+      if (error) {
+         toast.error(error.response?.data?.error?.message);
+      }
+   };
+
    const submitHandler = (values: any, actions: any) => {
-      _register(values);
+      dispatch(_register({ userObj: values, callback: callback }));
       actions?.resetForm();
    };
    const validatorHandler = (values: any) => {
@@ -22,15 +38,5 @@ export default function useRegisterController() {
       return errors;
    };
 
-   const _register = async (userObj: { email: string; password: string; confirm_password: string }) => {
-      try {
-         const { data } = await axios.post("/api/v1/auth/register", userObj);
-         console.log(data);
-         router.replace("login");
-         toast.success(data?.message);
-      } catch (error: any) {
-         toast.error(error.response?.data?.message);
-      }
-   };
    return { submitHandler, validatorHandler };
 }

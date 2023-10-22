@@ -1,9 +1,15 @@
 "use client";
-import NextButton from "@/shared/components/NextButton";
+
 import Link from "next/link";
 import React, { useRef } from "react";
+import Card from "../../../../../test/components/Card";
+import Header from "../../../../../test/components/Header";
+import { useRouter } from "next/navigation";
+import Button from "@/app/components/form/Button";
 
 export default function AdminBlogsPage() {
+   const router = useRouter();
+
    return (
       <>
          <div className="text-theme-level-5 bg-theme-level-2 p-3">
@@ -12,13 +18,13 @@ export default function AdminBlogsPage() {
                   <div className="text-xl text-theme-level-5 uppercase">Admin Blogs Control</div>
                </div>
                <div className="col-8 text-end">
-                  <NextButton role="button" type="button" color="success" size="large" navigate={{ path: "blogs/categories" }}>
+                  <Button role="button" type="button" color="success" size="large" navigate={{ path: "blogs/categories" }}>
                      + category
-                  </NextButton>
+                  </Button>
                   &nbsp;
-                  <NextButton role="button" type="button" color="success" size="large" navigate={{ path: "blogs/add" }}>
+                  <Button role="button" type="button" color="success" size="large" navigate={{ path: "blogs/add" }}>
                      + blogs
-                  </NextButton>
+                  </Button>
                </div>
             </div>
             {[1, 2, 3, 4, 5].map((user, idx) => (
@@ -30,9 +36,9 @@ export default function AdminBlogsPage() {
                      <div className="sm:col-12 md:col-8">
                         <div className="row">
                            <div className="sm:col-12 md:col-12 text-xl mb-3 font-semibold">
-                              <NextButton role="href" navigate={{ path: "blogs/100?mode=view" }}>
+                              <Button role="href" navigate={{ path: "blogs/100?mode=view" }}>
                                  Golden Knights out to fulfill owner's quest to win Stanley Cup in 6th year...
-                              </NextButton>
+                              </Button>
                            </div>
                            <div className="sm:col-12 md:col-4 text-sm mb-1">
                               <span className="font-semibold">Category</span> : john@example.com
@@ -49,11 +55,11 @@ export default function AdminBlogsPage() {
                         </div>
                      </div>
                      <div className="sm:col-12 md:col-2 text-center">
-                        <NextButton role="button" type="button" size="small" color="warning" navigate={{ path: "blogs/100?mode=edit" }}>
+                        <Button role="button" type="button" size="small" color="warning" navigate={{ path: "blogs/100?mode=edit" }}>
                            edit
-                        </NextButton>
+                        </Button>
                         &nbsp;
-                        <NextButton
+                        <Button
                            role="button"
                            type="button"
                            size="small"
@@ -66,7 +72,7 @@ export default function AdminBlogsPage() {
                               },
                            }}>
                            delete
-                        </NextButton>
+                        </Button>
                      </div>
                   </div>
                </React.Fragment>

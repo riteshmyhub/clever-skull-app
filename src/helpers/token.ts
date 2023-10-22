@@ -15,6 +15,6 @@ export const verifyJWT = async <T>(token: string): Promise<T> => {
       const verify = (await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET_KEY))).payload as T;
       return verify;
    } catch (error: any) {
-      throw new Error(error).message;
+      throw error;
    }
 };

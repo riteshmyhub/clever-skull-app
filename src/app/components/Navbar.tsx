@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React from "react";
-import { LoginButton, LogoutButton } from "./Sidebar";
+import Button from "./form/Button";
 
-export default function NavBar() {
+export default function NavBar({ user }: { user: any }) {
    return (
       <>
          <header>
@@ -30,17 +30,25 @@ export default function NavBar() {
                               Blogs
                            </Link>
                         </li>
-                        <li>
-                           <Link href="/dashboard" className="block py-2 text-theme-level-5 rounded uppercase text-xl">
-                              Dashboard
-                           </Link>
-                        </li>
-                        <li>
-                           <LoginButton />
-                        </li>
-                        <li>
-                           <LogoutButton />
-                        </li>
+                        {user?.allowRoles ? (
+                           <>
+                              {user?.allowRoles?.includes("user") && (
+                                 <Link href="/dashboard" className="block py-2 text-theme-level-5 rounded uppercase text-xl">
+                                    Dashboard
+                                 </Link>
+                              )}
+
+                              {user?.allowRoles?.includes("admin") && (
+                                 <Link href="/admin" className="block py-2 text-theme-level-5 rounded uppercase text-xl">
+                                    admin
+                                 </Link>
+                              )}
+                           </>
+                        ) : (
+                           <Button type="button" role="button" color="primary" size="large" navigate={{ path: "/auth/login" }}>
+                              Login
+                           </Button>
+                        )}
                      </ul>
                   </div>
                </div>
