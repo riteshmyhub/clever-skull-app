@@ -3,12 +3,12 @@ import Link from "next/link";
 import React, { ReactNode, useEffect } from "react";
 import { MdLogout } from "react-icons/md";
 import { usePathname } from "next/navigation";
-import { appRefresh } from "@/redux/slices/auth.slice";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import Button from "./form/Button";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import AuthService from "@/redux/services/auth.service";
+import { useAuth } from "@/redux/AppProvider";
 
 type Props = {
    children: ReactNode;
@@ -22,21 +22,22 @@ type NavItem = {
 };
 
 export default function DashboardPanel({ children, navList }: Props) {
-   const { user } = useAppSelector((state) => state.authReducer);
+   const user = useAuth();
    const pathname = usePathname();
    const router = useRouter();
    const { _logout } = new AuthService();
    const dispatch = useAppDispatch();
 
-   const callback = ({ data, error }: any) => {
+   const logoutCallback = ({ data, error }: any) => {
       if (data) {
          router.replace("/auth/login");
-         toast.success(data?.message);
-         dispatch(appRefresh());
          router.refresh();
+         toast.success(data?.message);
       }
       if (error) {
-         toast.error(error.response?.data?.error?.message);
+         router.replace("/auth/login");
+         toast.error(error.response?.data?.message);
+         router.refresh();
       }
    };
 
@@ -84,7 +85,7 @@ export default function DashboardPanel({ children, navList }: Props) {
                            title: "you are current logged in you will be automatically logged out in 50 seconds",
                            type: "danger",
                            callback() {
-                              dispatch(_logout({ callback: callback }));
+                              dispatch(_logout({ callback: logoutCallback }));
                            },
                         }}>
                         <span className="flex items-center p-3 text-red-600">

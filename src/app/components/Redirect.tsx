@@ -16,6 +16,7 @@ export default function Redirect({ matchPath, to, callback }: Props) {
       if (pathname.includes(matchPath)) {
          callback && callback();
          router.replace(to);
+         router.refresh();
       }
       return () => {};
    }, [pathname]);

@@ -1,5 +1,4 @@
 import AuthService from "@/redux/services/auth.service";
-import { appRefresh } from "@/redux/slices/auth.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -15,7 +14,6 @@ export default function useLoginController() {
          router.replace("/dashboard/profile");
          toast.success(data?.message);
          router.refresh();
-         dispatch(appRefresh());
       }
       if (error) {
          toast.error(error.response?.data?.error?.message);

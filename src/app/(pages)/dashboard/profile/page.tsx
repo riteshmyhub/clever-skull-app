@@ -33,7 +33,7 @@ export default function ProfilePage() {
                            </RadioGroup>
                         </div>
                         <div className="col-12 p-2">
-                           <Button type="submit" role="button" size="large" color="primary" disabled={!(formik.dirty && formik.isValid) || loading} loading={loading}>
+                           <Button type="submit" role="button" size="large" color="primary" disabled={!(formik.dirty && formik.isValid)} loading={loading}>
                               Create Profile
                            </Button>
                         </div>

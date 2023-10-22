@@ -47,15 +47,6 @@ export default class AuthService extends HttpClient {
       }
    });
 
-   _useOnLoad = createAsyncThunk(endpoints.user.getProfile, async (_, thunkAPI) => {
-      try {
-         const { data } = await this.get(endpoints.user.getProfile);
-         return data;
-      } catch (error: any) {
-         return thunkAPI.rejectWithValue(error?.response?.data?.error);
-      }
-   });
-
    _updateProfile = createAsyncThunk(endpoints.user.createProfile, async ({ profile, callback }: UpdateProfile, thunkAPI) => {
       try {
          const { data } = await this.post(endpoints.user.createProfile, profile);

@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import ProfilePage from "../../dashboard/profile/page";
 import Redirect from "@/app/components/Redirect";
+import { useAuth } from "@/redux/AppProvider";
 
 interface AuthGuardType {
    clientRoles: string[];
@@ -12,24 +13,20 @@ interface AuthGuardType {
 
 export default function AuthGuard({ clientRoles, children }: AuthGuardType): JSX.Element {
    const pathname = usePathname();
-   const { rootLoading, user } = useAppSelector((state) => state.authReducer);
- 
-   if (rootLoading) {
-      return <p>auth checking...</p>;
-   } else {
-      if (user) {
-         const { allowRoles, profile } = user;
-         if (allowRoles && allowRoles.find((role) => clientRoles?.includes(role))) {
-            if (profile?.name) {
-               return <>{children}</>;
-            } else {
-               return <ProfilePage />;
-            }
+   const user = useAuth();
+
+   if (user) {
+      const { allowRoles, profile } = user;
+      if (allowRoles && allowRoles.find((role: any) => clientRoles?.includes(role))) {
+         if (profile?.name) {
+            return <>{children}</>;
          } else {
-            return <p>you are unauthorized for page</p>;
+            return <ProfilePage />;
          }
       } else {
-         return <Redirect matchPath={pathname} to="auth" />;
+         return <p>you are unauthorized for page</p>;
       }
+   } else {
+      return <Redirect matchPath={pathname} to="auth" />;
    }
 }

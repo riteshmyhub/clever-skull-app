@@ -3,13 +3,14 @@ import { ReactNode, createContext, useContext, useEffect, useState } from "react
 import { getCustomization } from "./slices/customization.slice";
 import { useAppDispatch, useAppSelector } from "./store";
 import { fontsObj } from "@/shared/utils/fonts";
-import AuthService from "./services/auth.service";
-const UserContext = createContext({});
+import { User } from "./interfaces/user.type";
+
+type UserType = User;
+
+const UserContext = createContext<UserType | null>(null);
 function AppProvider({ children, user }: { children: ReactNode; user: any }) {
    const dispatch = useAppDispatch();
    const { loading, theme, font } = useAppSelector((state) => state.customizationReducer);
-   const { isRefresh } = useAppSelector((state) => state.authReducer);
-   const { _useOnLoad } = new AuthService();
 
    const applyTheme = (theme: any) => {
       const root = document.documentElement;
@@ -37,11 +38,6 @@ function AppProvider({ children, user }: { children: ReactNode; user: any }) {
       return () => {};
    }, [theme, font]);
 
-   useEffect(() => {
-      dispatch(_useOnLoad());
-      return () => {};
-   }, [isRefresh]);
-
    return (
       <div>
          {loading ? (
@@ -54,7 +50,7 @@ function AppProvider({ children, user }: { children: ReactNode; user: any }) {
                </section>
             </div>
          ) : (
-            <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+            <UserContext.Provider value={user}>{children}</UserContext.Provider>
          )}
       </div>
    );

@@ -11,7 +11,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <html lang="en">
          <body className="bg-theme-level-1" suppressHydrationWarning={true}>
             <ReduxProvider user={data?.user}>
-               <NavBar user={null} />
+               <NavBar />
                <main style={{ height: "calc(100vh - 76px)", overflowY: "scroll" }} suppressHydrationWarning={true}>
                   {children}
                </main>
@@ -23,7 +23,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
 async function getProfile() {
    let accessToken = cookies().get("accessToken")?.value;
-   const res = await fetch("http://localhost:3000/api/v1/user/profile", {
+   const res = await fetch("http://localhost:8000/api/v1/user/profile", {
       headers: {
          Authorization: accessToken as string,
       },

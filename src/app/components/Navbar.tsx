@@ -1,8 +1,11 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import Button from "./form/Button";
+import { useAuth } from "@/redux/AppProvider";
 
-export default function NavBar({ user }: { user: any }) {
+export default function NavBar() {
+   const user = useAuth();
    return (
       <>
          <header>

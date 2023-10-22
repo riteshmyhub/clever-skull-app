@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import React, { useRef } from "react";
-import Card from "../../../../../test/components/Card";
-import Header from "../../../../../test/components/Header";
 import { useRouter } from "next/navigation";
 import Button from "@/app/components/form/Button";
 
